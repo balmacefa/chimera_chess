@@ -3,6 +3,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    ports:
-      - "80:80"
+    expose:
+      - "80"
+    environment:
+      - SOURCE_COMMIT
+      - SERVICE_FQDN_FRONTEND
+      - SERVICE_URL_FRONTEND
     restart: unless-stopped
