@@ -11,4 +11,6 @@ services:
       - COOLIFY_BRANCH
       - SOURCE_COMMIT
       - COOLIFY_RESOURCE_UUID
+      - SERVICE_FQDN_FRONTEND
+      - SERVICE_URL_FRONTEND
     restart: unless-stopped
