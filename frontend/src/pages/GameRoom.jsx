@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom';
 
 export default function GameRoom() {
   const { roomId } = useParams();
-  const [board, setBoard] = useState(Array(8).fill(Array(8).fill(null)));
+  const [board, setBoard] = useState(
+    Array.from({ length: 8 }, () => Array(8).fill(null))
+  );
 
   // Mock data for initial visualization
   const moves = [
