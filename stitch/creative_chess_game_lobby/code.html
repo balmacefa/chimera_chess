@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creative Chess Game Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "sidebar-dark": "#0b0f17",
+                        "card-dark": "#192233",
+                        "accent-blue": "#3b82f6",
+                        "accent-purple": "#8b5cf6",
+                        "accent-pink": "#ec4899",
+                        "accent-teal": "#14b8a6",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232f48;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen flex overflow-hidden selection:bg-primary selection:text-white">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-sidebar-dark border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 h-full">
+<div class="p-6 flex flex-col gap-8">
+<!-- User Profile Summary -->
+<div class="flex items-center gap-3">
+<div class="h-12 w-12 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center shrink-0 border-2 border-primary" data-alt="User profile avatar close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwarS6R8azYiqOIYVjjgH6Zr_3nZNRUCXb8zyaagocc5TOTkMbCjTdLdQAVLEcvbHDyidrmuVYAa33fX-iNXjU9s0I0xUmgWvE0y6r7-iTtBvvwIdhvrVlvRg73J8uoJEc9cVuOYNqJyGFrVlOcAgo-BiJerHngyFELghhHe6he_zBPIwREXty25cCySg__l57vEjCwZ-1H4_z7oeccT4CbSoVDCKD9_lMooqnYZiwqI2-gsnM3zfpNb5Bci0EuMok65O3m8ZaDkqB');">
+</div>
+<div class="flex flex-col overflow-hidden">
+<h2 class="text-base font-bold truncate text-slate-900 dark:text-white">GrandMaster_K</h2>
+<p class="text-xs text-slate-500 dark:text-slate-400">ELO 2150</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary dark:text-white dark:bg-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined filled">cottage</span>
+<span class="font-medium">Lobby</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person</span>
+<span class="font-medium group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
+<span class="font-medium group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">Friends</span>
+<span class="ml-auto bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">history</span>
+<span class="font-medium group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">leaderboard</span>
+<span class="font-medium group-hover:text-slate-900 dark:group-hover:text-slate-200 transition-colors">Rankings</span>
+</a>
+</nav>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-slate-200 dark:border-slate-800">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+                Log Out
+            </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Header -->
+<header class="shrink-0 px-8 py-8 flex flex-wrap items-end justify-between gap-6 border-b border-slate-200 dark:border-slate-800/50 bg-white/50 dark:bg-background-dark/50 backdrop-blur-sm sticky top-0 z-20">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl font-black tracking-tight text-slate-900 dark:text-white">Game Lobby</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Join a match or create your own variant adventure.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border-none rounded-lg text-sm text-slate-900 dark:text-slate-200 focus:ring-2 focus:ring-primary placeholder-slate-500 w-64 transition-all" placeholder="Search rooms..." type="text"/>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all transform active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    Create Room
+                </button>
+</div>
+</header>
+<!-- Filters Scroll Area -->
+<div class="shrink-0 px-8 py-4 border-b border-slate-200 dark:border-slate-800/50 bg-white dark:bg-background-dark">
+<div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+                    All Variants
+                </button>
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-accent-pink group-hover:text-accent-pink/80">science</span>
+                    Atomic
+                </button>
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-accent-purple group-hover:text-accent-purple/80">arrow_downward</span>
+                    Gravity
+                </button>
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-accent-teal group-hover:text-accent-teal/80">pets</span>
+                    Odd Pieces
+                </button>
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-accent-blue group-hover:text-accent-blue/80">king_bed</span>
+                    King of the Hill
+                </button>
+<button class="flex shrink-0 items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-sm font-medium transition-colors group">
+<span class="material-symbols-outlined text-[18px] text-yellow-500 group-hover:text-yellow-400">emoji_events</span>
+                    Standard
+                </button>
+</div>
+</div>
+<!-- Rooms Grid -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+<!-- Card 1: Atomic -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-accent-pink/50 transition-all hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]">
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Abstract explosive energy background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBlMew01_iDZ165GE-t6llcv3fYEieoDn-E9duN5H7CoBahOEwCE1QGY9YCRyxNEbjTN7eIsTo5DHEVWePxGvxjObPgvSeDU7LxbSCcHmH_g0wUtGrSl7cyN7GVTVNLdhpOx5dTQu5aApL5AnSvWRqsEaoEOGhNFJn_lysu3mEvw5_XgauedLH791f31GKz6N0hXk65Oe8akV2EqDn8lnKYOWGj8YBeSVe8u56CqFwuFvN-XxaJ9XJIH0PjChUzV50m55nbAnDi8MtB');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-accent-pink/20 backdrop-blur-md border border-accent-pink/30 text-accent-pink px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">science</span> Atomic
+                        </div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #402</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Player avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBVX2FPuRkUHbFYunGjhAIx5xkRKqxnDKq2mCAO9dIIN69RKuhH5JRSMuQiKfMmkSlygtjLulDHPrYXfHoQn9600i1M51vHdCWU9TAOeIsoz5E1H6dFrh6zLcx6Zhbamzq8KseBCbLi7JOfti3A9yCGaeBoaKJ6z7bpOmLGJXRKX0NAOD5MAzZ7E1VpFZ4NUBxOpY3HWEbmkwv9C_h4dP7tVjDu94q8qqWnLZCBVlx0--sMSWWU2Gnj5otEPJ_-3zsDPTPlTZa--PTP');"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: ChessWiz</span>
+</div>
+<span class="text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Public</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">1/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-accent-pink hover:text-white dark:hover:bg-accent-pink text-slate-900 dark:text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1 group/btn">
+                                Join
+                                <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Gravity -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-accent-purple/50 transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]">
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Dark abstract space nebula background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgG_i-sxfm3f-CFOfe7Eq1VOLFPhDvxY6IErFcIEQ56s8_2iJY339H7ZSY5gzDd3SwKATx-4HbQWNQ9Fm7h5NhV2Dy5e81cIf5egkQ6admP6Ec8_jw1Hk_s3x8F7cDBvx__FEhdN5vg8ov_UAPHQ3w3jQcykrLTDY42r0ZG9j5u5mqbnucRX9xk_TxcxJMAP1EVkNydBMoZ8HYqOUMBfbvmVGGLlWDTISiUMUXDG5CwEc0qlPE_gPX0hZexksIM0S5voZip-uT0bd9');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-accent-purple/20 backdrop-blur-md border border-accent-purple/30 text-accent-purple px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> Gravity
+                        </div>
+<div class="absolute top-3 right-3 bg-black/40 backdrop-blur-md text-white px-2 py-1 rounded-md text-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+</div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #399</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 flex items-center justify-center text-[10px] text-white font-bold">JD</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: JohnDoe</span>
+</div>
+<span class="text-xs font-medium text-orange-500 bg-orange-500/10 px-2 py-1 rounded">Private</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">0/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-accent-purple hover:text-white dark:hover:bg-accent-purple text-slate-900 dark:text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1 group/btn">
+                                Join
+                                <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3: Odd Pieces -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-accent-teal/50 transition-all hover:shadow-[0_0_20px_rgba(20,184,166,0.15)]">
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Abstract geometric shapes pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_D-YkGfib6xD_xY268bBTxxEyATuoaj-D67m3k1NZQABcN2PWEqaYgttPNzY7Ab2jmjCxT5CmT6xBZhMOzR54W-Nijzu-p88lP-yuwhpYjmc6RnBQS8Vrh9uh1iKr3QfvWOgzbgR-PeZv01EHc9UGwi8zFVECh3rOc48XcCDtkojgVXcOrVDAn_r0ia6rYIWqEdVi7YN_QSZiA9jq4dOdkAEkhaERj6bkM9NeIkXS6sWqncV2ZKu3LWpi9Bg55_m71aX6xYtd_ROf');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-accent-teal/20 backdrop-blur-md border border-accent-teal/30 text-accent-teal px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pets</span> Odd Pieces
+                        </div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #405</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Player avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBhTJscr1Dev2TNr7D19e04Q-9LnAWBXhER5tEShCv2G_nsHHEfMLDG9Qm2nJkFFXAXAY0CNDRzx9dbbWIET3Njmf7XHxUpTDV5TqOiMAGt3muZuZn3UET2JL6PNpqxBDJvJRoHnHPyoq9KIdJjZr3n26x2GEWkTPEryckUBRFrDXj65vd2D4FCE3Opp5KCp5peFuVDCPFrLWFeVPVx4aDr7bxWQ1Tfch1iuCEOWYwTKCMbnhFBNlemet_RFBkpeyVl03LBCQS_y3Qj');"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: KnightRider</span>
+</div>
+<span class="text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Public</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">1/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-accent-teal hover:text-white dark:hover:bg-accent-teal text-slate-900 dark:text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1 group/btn">
+                                Join
+                                <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4: Standard (Full) -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden opacity-75 hover:opacity-100 transition-all">
+<div class="h-32 w-full bg-cover bg-center relative grayscale" data-alt="Classic wooden chessboard close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCk_K1dKdcXCIluCpGKndHT77mc4scthEU2nXrV8a1MahaFkSLqh974XBx-FU8oW7DBQsjYB2S5la4Q0i1C4mcab1HNMOxS4wJf7-wh6WGtJWtlTB_0m-MlV0BHSP5pYxlTyMakaGVBYMM68PYnYAiCepRg0eY6cco_03km_Pcx0wZPjrWlMvg1fqEvtXmmKX7oGiBKluHI19NaRPq8SMAUA3EVwd_98zEuIGbn5UAsISEBMvE9gJrdsAstQRxS-9A0b95m0fi2KqNZ');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-slate-500/30 backdrop-blur-md border border-slate-400/30 text-slate-200 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">emoji_events</span> Standard
+                        </div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #380</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 flex items-center justify-center text-[10px] text-white font-bold">AB</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: AlphaBot</span>
+</div>
+<span class="text-xs font-medium text-slate-500 bg-slate-500/10 px-2 py-1 rounded">Full</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-red-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">2/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1">
+                                Full
+                                <span class="material-symbols-outlined text-[16px]">lock</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 5: King of the Hill -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-accent-blue/50 transition-all hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Mountain peak abstract representation" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKjMPUPLd1Aqd0FuMOjZnM7AJ61Af4i44vOiOnmV38Vpzcs13ksiRW8ChbiD6b2ZBQ_I9l8XdA1cPqk_lBFUmqn3h-0kniYJk6me1FnyV6WAsbZQHE7tyotm_WoyNijRj1vv0J-RaPxrUJ5Vo-kogdd4jwxHf6B_Tyr5-Pglio3dFBm-HJmkNJCNwTqnXrQ_WuDDZllJsm5KkI233pUSWQctrAlLmrfyAkqnJyOQpR6eDThIGSiudO3nuvjzyxXwReh6l-eLS8niID');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-accent-blue/20 backdrop-blur-md border border-accent-blue/30 text-accent-blue px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">king_bed</span> KOTH
+                        </div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #410</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 bg-cover bg-center" data-alt="Player avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUOTVv96RcHtCMIdyuE2KFfsdQiKKS3iiUBe2HxtDCxZegWRLK1agzaDiHCnsBuOfBApJNBfnE91Oc95wP19AUKeSJ5w6lpElkO_SsZSJfC4qyeHytw3I2lH3JbQFO7tvqCHJknIF9zgL6MjJMlPLkS77QJFNubEPB9rYOjcPiiIJeQ3f4joOkpXpEZNKiQyKpdSYUXbc4foSBRYgJXCv0zbIlXN2Z3rqzyL0mVNvWIlGmETFF-R0rfQlnwUDpY5BPnUWJrHhLck2R');"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: PeakMaster</span>
+</div>
+<span class="text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Public</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">0/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-accent-blue hover:text-white dark:hover:bg-accent-blue text-slate-900 dark:text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1 group/btn">
+                                Join
+                                <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 6: Atomic -->
+<div class="group relative flex flex-col bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-accent-pink/50 transition-all hover:shadow-[0_0_20px_rgba(236,72,153,0.15)]">
+<div class="h-32 w-full bg-cover bg-center relative" data-alt="Pink and purple abstract light trails" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYIk6PDDyyg2CadURXX1bJ_Gl-5FVdIkEqHSnXm6GZ9HphD-MbBBpaOAERrat-bXjA7zxI31h5uH_z-oFFPEpYp7oL3w50dW5TprKfYdHpm4-BYHUZ2k9Gq7HjGXftrWM3Pjat35Nw8_vwLtzL9IQcCN4zljBAZSbADWix2K0ICswadTYvEecjHnMk8jqHTGYo3mfiB2q6-jJbEd901bB91qawW7OEPdazhUiE71Pr9YPJc1X4D38HpyKo-LpHT6W2obmO2ixPuY9-');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute top-3 left-3 bg-accent-pink/20 backdrop-blur-md border border-accent-pink/30 text-accent-pink px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">science</span> Atomic
+                        </div>
+<div class="absolute bottom-3 left-3 text-white font-bold text-lg drop-shadow-md">Room #412</div>
+</div>
+<div class="p-4 flex flex-col gap-4 grow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-slate-700 flex items-center justify-center text-[10px] text-white font-bold">GM</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Creator: GrandM...</span>
+</div>
+<span class="text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded">Public</span>
+</div>
+<div class="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span class="text-sm">1/2 Players</span>
+</div>
+<button class="bg-slate-100 dark:bg-slate-800 hover:bg-accent-pink hover:text-white dark:hover:bg-accent-pink text-slate-900 dark:text-white px-4 py-1.5 rounded-lg text-sm font-bold transition-all flex items-center gap-1 group/btn">
+                                Join
+                                <span class="material-symbols-outlined text-[16px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
