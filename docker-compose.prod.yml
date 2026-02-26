@@ -3,6 +3,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod
-    ports:
-      - "80:80"
+    expose:
+      - "80"
+    environment:
+      - COOLIFY_URL
+      - COOLIFY_FQDN
+      - COOLIFY_BRANCH
+      - SOURCE_COMMIT
+      - COOLIFY_RESOURCE_UUID
     restart: unless-stopped
