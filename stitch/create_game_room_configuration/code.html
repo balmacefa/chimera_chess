@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chimera Chess - Create Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-highlight": "#232f42",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation (Background context) -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-10 py-3 bg-white dark:bg-[#111722] z-0 opacity-50 pointer-events-none select-none">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">chess</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Chimera Chess</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex items-center gap-9">
+<a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Lobby</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Tournaments</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Leaderboard</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    Create Room
+                </button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 bg-slate-200 dark:bg-slate-700" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3mayK6pHaGk215euFi0QzkQbprHLeNLLJ6JB2YJvq04nugKCi6CBYWfNr-mTgE8O8wZLLlh6i4WR0xwfbE0Yp3g0elS5_Gc6O94Yw8Ie3-cVN1RzUEwtDmcSYXav8HUc4U_5v__StQGixSTQc2WHzTo-UTxnGNmzQyZdchEtPO2j59Lu5TyrKDg9a1KNhtMB-3Gc8oM6sV4rardwkN9D57_QQIv_Q9hKUGuC13fn-q9zJKQyckdqsPLgbJHF9h4XuchPhBGH_91is");'></div>
+</div>
+</div>
+</header>
+<!-- Main Lobby Content (Background context) -->
+<div class="flex-1 px-10 py-8 opacity-20 pointer-events-none select-none overflow-hidden">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Game Lobby</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Mock game cards -->
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-bold text-slate-900 dark:text-white">Standard • 10+5</span>
+<span class="text-xs font-medium px-2 py-1 rounded bg-green-500/20 text-green-600 dark:text-green-400">Casual</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">GrandMasterFlash</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1450 ELO</p>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-bold text-slate-900 dark:text-white">Atomic • 3+2</span>
+<span class="text-xs font-medium px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-400">Rated</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">ChessWizard99</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1820 ELO</p>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-bold text-slate-900 dark:text-white">Standard • 10+5</span>
+<span class="text-xs font-medium px-2 py-1 rounded bg-green-500/20 text-green-600 dark:text-green-400">Casual</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">GrandMasterFlash</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1450 ELO</p>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-bold text-slate-900 dark:text-white">Atomic • 3+2</span>
+<span class="text-xs font-medium px-2 py-1 rounded bg-orange-500/20 text-orange-600 dark:text-orange-400">Rated</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">ChessWizard99</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1820 ELO</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
+<div class="w-full max-w-4xl bg-white dark:bg-[#161e2e] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700 max-h-[90vh]">
+<!-- Modal Header -->
+<div class="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-[#161e2e]">
+<div>
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Create a Game</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Configure your room settings and challenge friends.</p>
+</div>
+<button class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8">
+<form class="space-y-8" onsubmit="event.preventDefault()">
+<!-- Variant Selection -->
+<section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">extension</span> Game Variant
+                        </h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Standard -->
+<label class="group cursor-pointer relative">
+<input checked="" class="peer sr-only" name="variant" type="radio" value="standard"/>
+<div class="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-32 md:h-40 flex flex-col justify-end p-3 hover:border-primary/50">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="Classic chess pieces on a board" style='background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDudDvTJBG3QyB-JV15bzxXv-oqn01qpffqqiSIZ4Da5Vt4aiZFkwvjcjLF0rnJOGddciyE-ddXDHXMJrtn11vtIf262hambYrMP3f_VDRneboBEEK_j_TS7Bnjl6wzMsPdAAiX4reDId4v4tWiCNmBNbs_Ffm4vcn7R8gpNzche2eOzRAXgYvn8Ophu1VQEVQd2Duv3Y4bao7GRV2BTTsZXWHCVH9ynasCepfvAiV2PWIi-pyuIWTJYQTHJVXXZvg5OeFMziu9hVSS");'></div>
+<div class="relative z-10 flex items-center justify-between">
+<span class="text-white font-bold text-sm md:text-base">Standard</span>
+<span class="material-symbols-outlined text-white opacity-0 peer-checked:opacity-100 transition-opacity text-lg">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Atomic -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="variant" type="radio" value="atomic"/>
+<div class="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-32 md:h-40 flex flex-col justify-end p-3 hover:border-primary/50">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="Abstract energy explosion representing Atomic chess" style='background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuADj0Ke6OYkZ4F__Sp2eLsepqqWeXfyH7ST2F54GDBwkc4GNxoNQD-rMw53pDKJeHhNXkxV3uKEKK6azExNwNC5boP6dd5UYoJhEqiMlE9-D3V4UTyFBaV_4c2aADWfxAQrsn-EF9PfZsz1-vf_TCb9gXl0hhU4x20MrSy_jFYtIewhj7VVMql07pbF5JklAov3nCeNNCRoeAYlx-mcz_FyRovHRbZ4Hn03c52Skg7pKbfIlvca7FwRo-iOBpEsLTb8oDNAHxyh07kn");'></div>
+<div class="relative z-10 flex items-center justify-between">
+<span class="text-white font-bold text-sm md:text-base">Atomic</span>
+<span class="material-symbols-outlined text-white opacity-0 peer-checked:opacity-100 transition-opacity text-lg">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Gravity -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="variant" type="radio" value="gravity"/>
+<div class="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-32 md:h-40 flex flex-col justify-end p-3 hover:border-primary/50">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="Abstract gravitational waves pattern" style='background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuD-5e60HEg9QHwieY7Ey5JZLQBWbwOLaMcm8ghYBu8Ei_iJEgqt6WtpCpSb32WRT6LoDsa3rXxPIcOsUoWRdK4cNWrHc1DMYvrSqV3Fwcuyhlj96_wuco7flkQfLz6XzB-JBTb4Nxx8YD6KZdXjZs08smBhVoYQRQHsDU_IzxzkbhAbMfIQmOh9NRu_SNHCI9ebPSWzDaYnIu_e7f6eNlYC3hdMwPiNEdWty0iom6MDh-wYjhfqp2XmJumN6yyBNqXJ7EY0h6H3LqVx");'></div>
+<div class="relative z-10 flex items-center justify-between">
+<span class="text-white font-bold text-sm md:text-base">Gravity</span>
+<span class="material-symbols-outlined text-white opacity-0 peer-checked:opacity-100 transition-opacity text-lg">check_circle</span>
+</div>
+</div>
+</label>
+<!-- Odd Move -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="variant" type="radio" value="oddmove"/>
+<div class="relative overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 peer-checked:border-primary peer-checked:bg-primary/5 transition-all h-32 md:h-40 flex flex-col justify-end p-3 hover:border-primary/50">
+<div class="absolute inset-0 bg-cover bg-center opacity-70 group-hover:opacity-100 transition-opacity" data-alt="Abstract geometric shapes for Odd Move variant" style='background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjar-TOx_n4M4Li4Bl_16V7zFiQSfWfMVtk9aYqaqcEFEz95qlfAAUd0EZtX4B5EmwMPv1kerCiPuBNsnTl-v-liUBv3I2owVh2FNiubNRj_Q-pxqployqpC-gn8tosJyQY0Lef2YS_ui82vy0zxynk24bbJ9Whszo3DWRChKZOdInanHKsOipFvcUFm3yTx9g8JDFOsROXC9AWhkODRAS3xNJvZIq8bJnVk3yH1gmYXmfM4Xdl2e8jFdD5irfsdGbXkt7QWQyYCBF");'></div>
+<div class="relative z-10 flex items-center justify-between">
+<span class="text-white font-bold text-sm md:text-base">Odd Move</span>
+<span class="material-symbols-outlined text-white opacity-0 peer-checked:opacity-100 transition-opacity text-lg">check_circle</span>
+</div>
+</div>
+</label>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Time Control -->
+<section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">timer</span> Time Control
+                            </h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="relative group">
+<label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5 ml-1">Minutes per side</label>
+<select class="w-full bg-slate-50 dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg p-3 outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none">
+<option>1 min</option>
+<option>3 min</option>
+<option>5 min</option>
+<option selected="">10 min</option>
+<option>30 min</option>
+<option>Unlimited</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-[38px] pointer-events-none text-slate-500">expand_more</span>
+</div>
+<div class="relative group">
+<label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5 ml-1">Increment</label>
+<select class="w-full bg-slate-50 dark:bg-surface-dark border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-lg p-3 outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none">
+<option>+0 sec</option>
+<option>+1 sec</option>
+<option>+2 sec</option>
+<option selected="">+5 sec</option>
+<option>+10 sec</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-[38px] pointer-events-none text-slate-500">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Visibility -->
+<section>
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">visibility</span> Room Visibility
+                            </h3>
+<div class="flex flex-col gap-3">
+<label class="relative flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<input checked="" class="peer sr-only" name="visibility" type="radio" value="public"/>
+<div class="size-5 rounded-full border-2 border-slate-400 peer-checked:border-primary peer-checked:bg-primary mr-3 flex items-center justify-center">
+<div class="size-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="text-slate-900 dark:text-white font-medium">Public Match</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">RATED</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Anyone in the lobby can join.</p>
+</div>
+</label>
+<label class="relative flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<input class="peer sr-only" name="visibility" type="radio" value="private"/>
+<div class="size-5 rounded-full border-2 border-slate-400 peer-checked:border-primary peer-checked:bg-primary mr-3 flex items-center justify-center">
+<div class="size-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="text-slate-900 dark:text-white font-medium">Private Room</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Invite only via direct link.</p>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Side Selection -->
+<section class="border-t border-slate-200 dark:border-slate-700 pt-6">
+<h3 class="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-4 flex items-center gap-2 justify-center">
+<span class="material-symbols-outlined text-lg">contrast</span> Choose Your Side
+                        </h3>
+<div class="flex justify-center gap-6">
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="side" type="radio" value="white"/>
+<div class="w-16 h-16 rounded-full bg-slate-100 border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center peer-checked:ring-4 peer-checked:ring-primary/40 peer-checked:border-primary transition-all group-hover:scale-105">
+<span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300 transition-colors">person</span>
+</div>
+<p class="text-center text-xs font-medium text-slate-500 dark:text-slate-400 mt-2 peer-checked:text-primary">White</p>
+</label>
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="side" type="radio" value="random"/>
+<div class="w-16 h-16 rounded-full bg-gradient-to-br from-slate-100 to-slate-800 border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center peer-checked:ring-4 peer-checked:ring-primary/40 peer-checked:border-primary transition-all group-hover:scale-105">
+<span class="material-symbols-outlined text-3xl text-slate-500 dark:text-slate-300">shuffle</span>
+</div>
+<p class="text-center text-xs font-medium text-slate-500 dark:text-slate-400 mt-2 peer-checked:text-primary">Random</p>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="side" type="radio" value="black"/>
+<div class="w-16 h-16 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center peer-checked:ring-4 peer-checked:ring-primary/40 peer-checked:border-primary transition-all group-hover:scale-105">
+<span class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-slate-200 transition-colors">person</span>
+</div>
+<p class="text-center text-xs font-medium text-slate-500 dark:text-slate-400 mt-2 peer-checked:text-primary">Black</p>
+</label>
+</div>
+</section>
+</form>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 bg-slate-50 dark:bg-[#111722] border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3">
+<button class="px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors">
+                    Cancel
+                </button>
+<button class="px-8 py-2.5 rounded-lg bg-primary hover:bg-blue-700 text-white text-sm font-bold shadow-lg shadow-primary/25 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                    Create Room
+                </button>
+</div>
+</div>
+</div>
+</body></html>

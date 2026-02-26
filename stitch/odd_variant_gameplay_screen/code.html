@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Odd Chess - Gameplay</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0f49bd",
+            "background-light": "#f6f6f8",
+            "background-dark": "#101622",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111722] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">chess</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Odd Chess</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-9">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Lobby</a>
+<a class="text-slate-900 dark:text-white font-semibold text-sm leading-normal" href="#">Play</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Tournaments</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Leaderboard</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6ealx0yNrSIMuqdpHiv08htgZHvAunj1nHToXEFClIJqFNCjypvS9Ib1whpQE2MPJ9IoPfiuNeGU4njEp89Wh7YsdYsMBlwwLFLb_M2HCPzuQrgh_FDTjFRY5jHUFTc7l6pRndBEeirDkU5RfQPknMWcbek-87fGA6DMS05Qyf6LviLLj_S_O8WVQPXse-95PGX1cUy8yGX6cIOFqu_0gM_iGb4v90kmw7iTt556NeY_vwy7U1XzLWWOaICifVYT_cNV9uRZGdbT1");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-1 flex flex-col lg:flex-row h-[calc(100vh-65px)]">
+<!-- Left Sidebar: Player Info & Move History -->
+<aside class="hidden xl:flex w-80 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111722] p-6 gap-6">
+<!-- Top Player Card -->
+<div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-full bg-slate-300 dark:bg-slate-700 bg-center bg-cover" data-alt="Opponent avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCtf0tO3QLk5CVo_GL1iKd7V2nXSa61E_4FajagSHvW5VcNWNBPmMcyedPuZ5aVVZBwBUdjUq7HI3zB0OP4yhemygslqePjjSkxj0AqCWFBGSkOAb2MYVOV-0yjCw3zpwMZzzxMxkxnKz_E9PGtR19RJ2jQ-kh_j6loWNuamNgEbyoFGzqemzGDoVGeqVxT5oBtpkj7ORkiNl9-y7BIJAn8DpFN18MQQmsnK-a8ESZ74IlFgjdcdr_8I9Sw9aosoJhQFJgizOi7fFzT");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-sm">Gravity Camel</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">Rating: 1450</span>
+</div>
+<div class="ml-auto flex items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+</div>
+</div>
+<!-- Move History -->
+<div class="flex-1 flex flex-col min-h-0 bg-slate-50 dark:bg-[#0d121c] rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="bg-slate-100 dark:bg-[#1a2333] px-4 py-2 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Moves</span>
+<span class="text-xs text-primary cursor-pointer hover:underline">Analysis</span>
+</div>
+<div class="overflow-y-auto p-2 text-sm">
+<div class="grid grid-cols-[30px_1fr_1fr] gap-x-2 gap-y-1">
+<div class="text-slate-400 dark:text-slate-600 text-right pr-2 py-1">1.</div>
+<div class="text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded px-2 py-1 cursor-pointer">e4</div>
+<div class="text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded px-2 py-1 cursor-pointer">e5</div>
+<div class="text-slate-400 dark:text-slate-600 text-right pr-2 py-1">2.</div>
+<div class="text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded px-2 py-1 cursor-pointer">Nf3</div>
+<div class="text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded px-2 py-1 cursor-pointer">Nc6</div>
+<div class="text-slate-400 dark:text-slate-600 text-right pr-2 py-1">3.</div>
+<div class="text-slate-700 dark:text-slate-300 bg-primary/10 text-primary font-semibold rounded px-2 py-1 cursor-pointer">Gf4</div>
+<div class="text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50 rounded px-2 py-1 cursor-pointer">...</div>
+</div>
+</div>
+</div>
+<!-- Bottom Player Card (Self) -->
+<div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
+<div class="size-10 rounded-full bg-slate-300 dark:bg-slate-700 bg-center bg-cover" data-alt="My avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAk4HJ7P0gHN8XCtRyBskgPFixiT6sHiVk_0dxz9UjSpa2I7Ws0K_5lfLdL2V6Sj5YJzjvMHACPN4mkWLmHJEyoeKDEd1CYbaV2hY9fpsJjk7n_7hTErVG5q7Jlq0JaGlhrpHTYXNxlSxeOYwH6_-AL2Ozo9OyIHsU_CqoIvmkQMcAj5iRowrznVAJ2CUV9MpI-823roesMglI5hjDm2W2Fch2sB8CZreje5u6TPNEJGvqmdDlmX7JEuHYumb7TmTws9Vp7f50ctYfi");'></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-sm">Atomic Giraffe</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">Rating: 1502</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-3">
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-lg">flag</span> Resign
+          </button>
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-lg">handshake</span> Draw
+          </button>
+</div>
+</aside>
+<!-- Center: Chess Board Area -->
+<section class="flex-1 bg-slate-100 dark:bg-[#0d121c] flex flex-col items-center justify-center p-4 relative">
+<!-- Top Clock -->
+<div class="flex items-center gap-4 mb-4 w-full max-w-[600px] justify-between lg:justify-end">
+<div class="lg:hidden flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-700 bg-cover" data-alt="Mobile opponent avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDz3bpsJ_xLyNa3EommDY5Hb-kyX1AlvGgCThw1_qkUz3y6mR5OF7PNUyQKRhf7gRz1Q2LyoWQ09x6CE2DDbLhJ2CUbpBmCckSrjxGc_F6K-JEs_tIzv-EZxRv8AfgWIKJ6jELvoqJe6pKHjNnyn9JHy0KJlDgyFLlGCjaotuITZur5MhEOs8GKGsC5mwttxNwaB-uxOOGQinTUpchFq5Eiika7oD07Zq-xCqurIBOcNXxPnpfXUJZkJigAj0XBzsV11IiKtDXpRA2e");'></div>
+<span class="text-slate-900 dark:text-white font-medium text-sm">Gravity Camel</span>
+</div>
+<div class="flex items-center gap-2 bg-slate-200 dark:bg-[#232f48] px-4 py-2 rounded-lg shadow-sm border-b-4 border-slate-300 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">schedule</span>
+<span class="text-2xl font-mono font-bold text-slate-800 dark:text-white">09:43</span>
+</div>
+</div>
+<!-- Board Wrapper -->
+<div class="aspect-square w-full max-w-[600px] bg-slate-300 dark:bg-slate-700 rounded shadow-2xl relative select-none">
+<!-- Board Grid Visualization (Simplified) -->
+<div class="absolute inset-0 grid grid-cols-8 grid-rows-8">
+<!-- Row 8 -->
+<div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<!-- Row 7 -->
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div>
+<!-- Row 6 -->
+<div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<!-- Row 5 (Giraffe Selected at D5) -->
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<div class="bg-[#bbcb2b] flex items-center justify-center relative">
+<!-- Selected Piece Highlight -->
+<div class="absolute inset-0 border-4 border-[#f7f769] opacity-50"></div>
+<!-- Giraffe Icon -->
+<span class="material-symbols-outlined text-5xl md:text-6xl text-slate-900 drop-shadow-md z-10" style="font-variation-settings: 'FILL' 1;">pest_control_rodent</span>
+</div>
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div>
+<!-- Row 4 -->
+<div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<div class="bg-[#EBECD0] relative">
+<!-- Move Hint Dot -->
+<div class="absolute inset-0 flex items-center justify-center"><div class="size-4 md:size-6 rounded-full bg-black/10 hover:bg-black/20 cursor-pointer"></div></div>
+</div>
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<!-- Row 3 -->
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div>
+<!-- Row 2 -->
+<div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div>
+<!-- Row 1 -->
+<div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div><div class="bg-[#739552]"></div><div class="bg-[#EBECD0]"></div>
+</div>
+<!-- Coordinates -->
+<div class="absolute bottom-0.5 right-1 text-[10px] md:text-xs font-bold text-[#739552] dark:text-[#739552]">h</div>
+<div class="absolute top-0.5 left-1 text-[10px] md:text-xs font-bold text-[#739552] dark:text-[#739552]">8</div>
+<!-- Overlay Move Indicators (Example Vector for Giraffe) -->
+<!-- Just an abstract representation of a long L shape -->
+<div class="absolute top-[37.5%] left-[37.5%] w-[12.5%] h-[12.5%] pointer-events-none">
+<!-- This is the Giraffe square D5 -->
+</div>
+<!-- Target square A2 (3 squares away diagonally approx? No, giraffe is (1,4) or (2,3) leaper etc. Let's assume (1,4)) -->
+<!-- Let's just place a target marker -->
+<div class="absolute top-[87.5%] left-[50%] w-[12.5%] h-[12.5%] pointer-events-none flex items-center justify-center">
+<div class="size-4 bg-black/20 rounded-full ring-4 ring-black/5"></div>
+</div>
+</div>
+<!-- Bottom Clock -->
+<div class="flex items-center gap-4 mt-4 w-full max-w-[600px] justify-between lg:justify-end">
+<div class="lg:hidden flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-700 bg-cover" data-alt="Mobile self avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA88W3gmSr4elp8om_dx3Dyq8fam88qmDyacuZx5lqaUomy_4KwLE95WGHesy08lJIwWnBVc7_1CFohxVTcMgRHlghIH_iKEg7ZIOo1pXv2ZwDQihlxjTKF6VlSdnP-4jMn37Zxqoav_QvNAjjSraMF7bavWqECOn_BHDi5JHFRdYtiqGL8M-nBF3HNIicoZ_34k7nxkswF7cgA6ZM0jPAFLCJMLsflcfGOxek0DxUdn-PArdivUS5q_dqJlXutc71u-6EyPsKhUZ4n");'></div>
+<span class="text-slate-900 dark:text-white font-medium text-sm">You</span>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-primary px-4 py-2 rounded-lg shadow-lg border-b-4 border-slate-200 dark:border-blue-900 transform transition-transform hover:-translate-y-0.5 cursor-pointer">
+<span class="material-symbols-outlined text-slate-500 dark:text-blue-100">schedule</span>
+<span class="text-2xl font-mono font-bold text-slate-800 dark:text-white">08:15</span>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Piece Intel -->
+<aside class="w-full lg:w-96 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111722] flex flex-col h-full overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Piece Intel</h3>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">Active Variant</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                This match features <span class="text-primary font-medium">Odd Pieces</span>. Review the movement vectors below to plan your strategy.
+            </p>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Intel Card: Giraffe -->
+<div class="bg-slate-50 dark:bg-[#1a2333] rounded-xl p-5 border border-slate-200 dark:border-slate-800 relative group">
+<div class="absolute top-4 right-4 text-slate-300 dark:text-slate-600">
+<span class="material-symbols-outlined">info</span>
+</div>
+<div class="flex items-start gap-4">
+<div class="size-14 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pest_control_rodent</span>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-base">The Giraffe</h4>
+<span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">Leaper (1,4)</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-3">
+                        Jumps in an extended 'L' shape: <strong>4 squares</strong> in one cardinal direction and <strong>1 square</strong> perpendicularly. Can jump over other pieces.
+                    </p>
+<!-- Mini visualizer for moves -->
+<div class="flex gap-1 h-16 opacity-70">
+<div class="aspect-square bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-xs text-slate-400">.</div>
+<div class="aspect-square bg-primary/20 rounded flex items-center justify-center"><span class="block size-2 rounded-full bg-primary"></span></div>
+<div class="aspect-square bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-xs text-slate-400">.</div>
+<div class="aspect-square bg-slate-200 dark:bg-slate-700 rounded flex items-center justify-center text-xs text-slate-400">.</div>
+<div class="aspect-square bg-primary/20 rounded flex items-center justify-center"><span class="block size-2 rounded-full bg-primary"></span></div>
+</div>
+</div>
+</div>
+<!-- Intel Card: Camel -->
+<div class="bg-slate-50 dark:bg-[#1a2333] rounded-xl p-5 border border-slate-200 dark:border-slate-800 relative group">
+<div class="absolute top-4 right-4 text-slate-300 dark:text-slate-600">
+<span class="material-symbols-outlined">info</span>
+</div>
+<div class="flex items-start gap-4">
+<div class="size-14 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center shrink-0 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">cruelty_free</span>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold text-base">The Camel</h4>
+<span class="inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-300">Leaper (1,3)</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+<p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                        Similar to a Knight but longer. Moves <strong>3 squares</strong> in one cardinal direction and <strong>1 square</strong> perpendicularly. Always stays on the same color square.
+                    </p>
+</div>
+</div>
+<!-- General Variant Rules -->
+<div class="p-4 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 bg-transparent">
+<h5 class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider mb-2">Match Rules</h5>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-base text-primary">check_circle</span>
+<span>Atomic explosions disabled</span>
+</li>
+<li class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-base text-primary">check_circle</span>
+<span>No castling with custom pieces</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0d121c]">
+<button class="w-full py-3 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">menu_book</span>
+                Full Variant Guide
+            </button>
+</div>
+</aside>
+</main>
+</body></html>

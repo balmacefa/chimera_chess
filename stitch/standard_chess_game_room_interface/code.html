@@ -1,0 +1,379 @@
+<html class="dark" lang="en"><head>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head><body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden">```html
+
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chimera Chess - Standard Match</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1e293b",
+                        "surface-light": "#ffffff",
+                        "board-dark": "#334155",
+                        "board-light": "#e2e8f0",
+                        "board-highlight": "#fbbf24",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for move history */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Chimera Chess</h2>
+<div class="hidden md:flex h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Lobby</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Tournaments</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Learn</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="size-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 border border-slate-200 dark:border-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCbLvHoG3_s3sGQz35qgpQgoAtwD-GsMO0a88MtOEX0KMQaOcaXuJy5T2-PhUvdM1pNQBLNQPEsWikaYRymHVgNcIuxS83VyldNtWm36SkDr53GeYafflWmwQoeL0SbtOOi0-uIbpOcjT1SFDHm5kDoHrosSA-b8VItMaJTrlNHEsfp1lj0RKAPLx6mPt8mjccNZ3eCBNZMz7mwfbjxnE61Fn6qa_r4pREmxYlD5F0KPqJglk4CNVqfpNk8ippNBSqVNF2P5R6zD3Zd");'></div>
+<span class="text-sm font-bold hidden sm:block">MagnusCarlsen_01</span>
+</div>
+</div>
+</header>
+<!-- Main Game Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Sidebar: Players & Timers -->
+<aside class="w-80 bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between shrink-0 z-10 hidden lg:flex">
+<!-- Opponent Section (Top) -->
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center gap-4 mb-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-xl size-14 border-2 border-slate-300 dark:border-slate-600" data-alt="Opponent profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDh_h3aJtEnFUA_Ja-fFSA__AfWi6jxnmU7RLsGlEGSKtmKypKPpZDWa47iBRJ1hHyJpmkInt8Pe_c-EbwWfTV0FvaXQAB5GWU6K3vDPLxeW3oR90paD1YhouiDvWqvpQVo8EnPyPWH5Sk91UY1SxcGyZtxCpvHCR7CSrOO1LpIBLFmqHS6049pY97jISZjxCKOnoH_W6U7I2JnYeNDdYJKncrl4bHi5uZW86fnFZgHvmVkTFgumgn73cnd5rypG41TlBgwODCi0tR0");'></div>
+<div class="absolute -bottom-1 -right-1 bg-green-500 size-3 rounded-full border-2 border-white dark:border-slate-900"></div>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight">GrandMaster99</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300">GM</span>
+<span class="text-slate-500 dark:text-slate-400 text-sm">2850 ELO</span>
+<span class="text-slate-400 text-xs">🇺🇸 US</span>
+</div>
+</div>
+</div>
+<!-- Opponent Timer -->
+<div class="flex justify-between items-end mb-4">
+<div class="flex gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+<span class="text-xs font-medium uppercase tracking-wider">Thinking...</span>
+</div>
+<div class="bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 min-w-[100px] text-center">
+<span class="text-2xl font-mono font-bold text-slate-700 dark:text-slate-300">09:45</span>
+</div>
+</div>
+<!-- Captured Pieces By Opponent -->
+<div class="flex flex-wrap gap-1 p-2 bg-slate-100 dark:bg-slate-800/50 rounded-lg min-h-[40px]">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-[20px]">smart_toy</span> <!-- Placeholder for chess piece icons -->
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500 text-[20px]">smart_toy</span>
+<span class="text-xs font-bold text-slate-400 dark:text-slate-500 self-center ml-auto">+2</span>
+</div>
+</div>
+<!-- Game Info / Status (Middle) -->
+<div class="flex-1 flex flex-col items-center justify-center p-6 text-center">
+<div class="mb-4">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">Ranked Match</span>
+</div>
+<h1 class="text-2xl font-bold mb-1">Standard Chess</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-6">10 min + 5 sec increment</p>
+<div class="grid grid-cols-2 gap-3 w-full">
+<button class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+                        Resign
+                    </button>
+<button class="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors text-sm font-medium">
+<span class="material-symbols-outlined text-[18px]">handshake</span>
+                        Draw
+                    </button>
+</div>
+</div>
+<!-- Player Section (Bottom) -->
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark">
+<!-- Captured Pieces By Player -->
+<div class="flex flex-wrap gap-1 p-2 bg-slate-100 dark:bg-slate-800/50 rounded-lg min-h-[40px] mb-4">
+<span class="material-symbols-outlined text-slate-800 dark:text-slate-200 text-[20px]">smart_toy</span>
+<span class="material-symbols-outlined text-slate-800 dark:text-slate-200 text-[20px]">smart_toy</span>
+<span class="material-symbols-outlined text-slate-800 dark:text-slate-200 text-[20px]">smart_toy</span>
+<span class="text-xs font-bold text-green-500 self-center ml-auto">+3</span>
+</div>
+<!-- Player Timer -->
+<div class="flex justify-between items-end mb-4">
+<div class="flex gap-1 text-green-500">
+<span class="material-symbols-outlined text-[20px] fill-current">circle</span>
+<span class="text-xs font-medium uppercase tracking-wider self-center">Your Turn</span>
+</div>
+<div class="bg-white dark:bg-slate-700 px-4 py-2 rounded-lg border-2 border-primary min-w-[100px] text-center shadow-[0_0_15px_rgba(15,73,189,0.3)]">
+<span class="text-2xl font-mono font-bold text-slate-900 dark:text-white">08:22</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-xl size-14 border-2 border-primary" data-alt="Player profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuACPosmr1MRTaYxBAfWmL8c-UwfjtGdbSEES6OJ-ACQN--m9NUfx6myPDFLS7b40zRLWtRoZQCjplshdjt-aWQ6Fbe9-cklnHjpSQb58o6qu6ScIHIcW_iAtVGEb_P6CzRX9c0lCUF4seaW98nc574iiUb7cxziSJh4gAOHVxObO6gpL5vXHTEG5voGAqOZPkKMFF0c1hKQBnmndntgaaicOy8_7fuP9Owsk-122JWnXLM1bKmTmiDlVi4q1svq7VQESRnBYMDZWOUQ");'></div>
+</div>
+<div>
+<h3 class="font-bold text-lg leading-tight text-primary">You</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-slate-500 dark:text-slate-400 text-sm">1200 ELO</span>
+<span class="text-slate-400 text-xs">🇧🇷 BR</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center: Chess Board -->
+<section class="flex-1 flex flex-col items-center justify-center bg-slate-100 dark:bg-[#0b0f17] p-4 relative overflow-auto">
+<!-- Mobile View Player Bars (Only visible on small screens) -->
+<div class="lg:hidden w-full max-w-[80vh] flex justify-between items-center mb-4 px-2">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-700" data-alt="Opponent avatar small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_7d-sN0EL5jtwFef8Bixb5ZOdXF5q_51VaRShq7Fi_Wbh2m8HrO1ZMY-tBEUT_D39Y08sc63wB07TaRzKDXPBj6kfmLXyoWoBPQgpX4-BbL6n84svfgE0ZakMTcdUFUVBOdyHvW3hTi8rfisu0Xi_OWT1gIkpviBW8vyIST_r-icO9JnTtGJkDvhpm5B8Nlrn-LRBD1NCUFqD4gCsywYLZw65E3ef3u5ypgQwisB-C6S1cAq_0RCjgyE2bUGAdbTnHchmlj-yPRIO"); background-size: cover;'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">GM99</span>
+<span class="text-xs font-mono">09:45</span>
+</div>
+</div>
+</div>
+<!-- The Board Container -->
+<div class="aspect-square w-full max-w-[80vh] bg-surface-dark rounded-lg shadow-2xl p-1 lg:p-3 select-none">
+<!-- Board Grid -->
+<div class="w-full h-full grid grid-cols-8 grid-rows-8 border-4 border-slate-700 rounded overflow-hidden relative">
+<!-- Coordinates -->
+<div class="absolute left-0.5 top-0.5 text-[10px] font-bold text-slate-400 z-10 pointer-events-none">8</div>
+<div class="absolute right-0.5 bottom-0.5 text-[10px] font-bold text-slate-500 z-10 pointer-events-none">h</div>
+<!-- Rank 8 -->
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♜</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♞</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♝</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♛</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♚</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♝</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♞</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♜</div>
+<!-- Rank 7 -->
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-slate-800 cursor-grab active:cursor-grabbing hover:bg-opacity-90">♟</div>
+<!-- Rank 6 (Empty) -->
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<!-- Rank 5 (Highlight Move) -->
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-highlight/70 flex items-center justify-center relative">
+<!-- Previous move highlight/ghost -->
+<div class="size-3 bg-black/20 rounded-full"></div>
+</div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<!-- Rank 4 (Active Piece Highlight) -->
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300 relative">
+<!-- Possible Move Indicator -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="size-4 bg-slate-800/20 rounded-full"></div>
+</div>
+</div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-highlight flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing ring-inset ring-4 ring-yellow-500/50">♙</div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<!-- Rank 3 (Empty) -->
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<div class="bg-board-dark dark:bg-slate-600"></div>
+<div class="bg-board-light dark:bg-slate-300"></div>
+<!-- Rank 2 -->
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-light dark:bg-slate-300"></div> <!-- Moved pawn from here -->
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♙</div>
+<!-- Rank 1 -->
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♖</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♘</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♗</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♕</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♔</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♗</div>
+<div class="bg-board-dark dark:bg-slate-600 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♘</div>
+<div class="bg-board-light dark:bg-slate-300 flex items-center justify-center text-4xl lg:text-6xl text-white drop-shadow-md cursor-grab active:cursor-grabbing hover:bg-opacity-90">♖</div>
+</div>
+</div>
+<div class="lg:hidden w-full max-w-[80vh] flex justify-between items-center mt-4 px-2">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-700 ring-2 ring-primary" data-alt="Player avatar small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClbVdbOQvqbjk2dclvcK6qD-eVSZI1jqcYlIdYnZIrxO63iNWqZLqlJdfvXJqzHdTFVcrrDJjSLr5wOXYUzUURlwT0bSMAsD9Q0Dgg3jypyfon7mu77ZT473axHIMwSIpsei3zhGCiwKdTINgb5hWhBS9R-2XhEWZNSewHoV5T-FnofhSdhU5-Se_1b2V3sGNWYL8B8mSYD9pHV35OzXczb1WuU-tZ5nv2BFLQwa71uovMoIlhPwtypzLHfubyIf95Q92tvVxomOxN"); background-size: cover;'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-primary">You</span>
+<span class="text-xs font-mono">08:22</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Sidebar: Moves & Chat -->
+<aside class="w-80 bg-surface-light dark:bg-surface-dark border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0 z-10 hidden md:flex">
+<!-- Tabs -->
+<div class="flex border-b border-slate-200 dark:border-slate-800">
+<button class="flex-1 py-3 text-sm font-medium border-b-2 border-primary text-primary bg-primary/5">Moves</button>
+<button class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">Chat</button>
+<button class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">Notes</button>
+</div>
+<!-- Move History -->
+<div class="flex-1 overflow-y-auto p-0 scrollbar-hide">
+<table class="w-full text-sm font-mono border-collapse">
+<thead class="bg-slate-100 dark:bg-slate-800/50 sticky top-0 z-10 text-slate-500 dark:text-slate-400 text-xs uppercase">
+<tr>
+<th class="py-2 pl-4 text-left w-12 font-medium">#</th>
+<th class="py-2 text-left font-medium">White</th>
+<th class="py-2 pr-4 text-left font-medium">Black</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800/50">
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">1.</td>
+<td class="py-2 font-medium">e4</td>
+<td class="py-2 pr-4">e5</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">2.</td>
+<td class="py-2 font-medium">Nf3</td>
+<td class="py-2 pr-4">Nc6</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">3.</td>
+<td class="py-2 font-medium">Bb5</td>
+<td class="py-2 pr-4">a6</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">4.</td>
+<td class="py-2 font-medium">Ba4</td>
+<td class="py-2 pr-4">Nf6</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">5.</td>
+<td class="py-2 font-medium">O-O</td>
+<td class="py-2 pr-4">Be7</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">6.</td>
+<td class="py-2 font-medium">Re1</td>
+<td class="py-2 pr-4">b5</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+<td class="py-2 pl-4 text-slate-400">7.</td>
+<td class="py-2 font-medium">Bb3</td>
+<td class="py-2 pr-4">d6</td>
+</tr>
+<tr class="bg-primary/10 border-l-2 border-primary">
+<td class="py-2 pl-4 text-slate-400">8.</td>
+<td class="py-2 font-medium text-primary">c3</td>
+<td class="py-2 pr-4 text-slate-500">...</td>
+</tr>
+</tbody>
+</table>
+<div class="h-8"></div> <!-- Spacer -->
+</div>
+<!-- Analysis/Evaluation Bar -->
+<div class="px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/30">
+<div class="flex justify-between text-xs text-slate-500 mb-2">
+<span>Engine Eval</span>
+<span class="font-mono text-green-500">+0.4</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden flex">
+<div class="w-[52%] bg-white h-full"></div>
+<div class="w-[48%] bg-slate-800 dark:bg-black h-full"></div>
+</div>
+</div>
+<!-- Chat / Controls Input -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-surface-dark">
+<div class="flex justify-center gap-1 mb-4">
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded p-1.5 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">first_page</span>
+</button>
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded p-1.5 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded p-1.5 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded p-1.5 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">last_page</span>
+</button>
+</div>
+<div class="relative">
+<input class="w-full bg-slate-100 dark:bg-slate-900 border-none rounded-lg py-2.5 pl-3 pr-10 text-sm focus:ring-2 focus:ring-primary placeholder-slate-400" placeholder="Send a message..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary/80">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+</aside>
+</main>
+</body></html>
