@@ -1,8 +1,18 @@
 # chimera_chess
 
+## Documentation
+*   [**UI Design (UI.md)**](./UI.md): User Interface requirements and design system.
+*   [**API Specification (API.md)**](./API.md): REST endpoints and WebSocket events for room management and gameplay.
 
 Technical Design Document (TDD) v2: Modular & Creative Chess Platform
 This version focuses on the technical specification for a decoupled Python (Backend) and React (Frontend) architecture, specifically engineered to support non-standard physics and movement vectors.
+
+## Multi-Room Architecture
+The platform is designed to support multiple concurrent game rooms. Players can:
+*   Create public or private rooms with specific game variants (Standard, Atomic, Gravity, Odd).
+*   Join existing rooms via the Lobby or a direct link.
+*   Interact via real-time WebSocket connections for moves and chat.
+
 1. System Architecture: The Hexagonal Core
 The system is divided into the Domain (Pure Logic), Adapters (Persistence/UI), and Ports (Interfaces).
 Backend (Python)
