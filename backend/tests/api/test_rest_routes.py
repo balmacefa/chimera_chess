@@ -1,11 +1,13 @@
 from fastapi.testclient import TestClient
 from app.main import app
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, AsyncMock
 from app.services.game_service import GameService
+from app.infrastructure.repository import IGameRepository
+import pytest
 
-# Dependency injection override or mocking would be ideal here.
-# For simplicity, if we can override the dependency in FastAPI, that's best.
-# Assuming app.state.game_service is used or dependency injection.
+# Note: TestClient is synchronous. For full async route testing, we'd use httpx.AsyncClient.
+# However, FastAPI's TestClient wraps the async app in a way that allows standard requests to work.
+# The internal handlers are async, but TestClient handles the event loop for us.
 
 def test_create_room():
     client = TestClient(app)

@@ -31,9 +31,6 @@ def test_websocket_make_move():
         assert "fen" in data["payload"]
 
         # Check that the FEN actually represents the move
-        # Initial: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
-        # After e2-e4: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-        # "4P3" should be present in the FEN
         assert "4P3" in data["payload"]["fen"]
 
 def test_websocket_chat():

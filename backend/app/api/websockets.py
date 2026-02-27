@@ -1,9 +1,9 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from typing import List, Dict
-from app.infrastructure.database import SessionLocal
+from app.infrastructure.database import AsyncSessionLocal
 from app.infrastructure.repository import SQLiteRepository
 from app.services.game_service import GameService
-from contextlib import contextmanager
+from contextlib import asynccontextmanager
 import json
 
 router = APIRouter()
@@ -33,13 +33,13 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-@contextmanager
-def get_db_session():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+@asynccontextmanager
+async def get_db_session():
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
 
 @router.websocket("/ws/game/{game_id}")
 async def websocket_endpoint(websocket: WebSocket, game_id: str):
@@ -56,11 +56,10 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str):
                 to_sq = payload.get("to")
 
                 try:
-                    # Use context manager to handle DB session cleanly for each request
-                    with get_db_session() as db:
+                    async with get_db_session() as db:
                         repo = SQLiteRepository(db)
                         service = GameService(repo)
-                        result = service.make_move(game_id, from_sq, to_sq)
+                        result = await service.make_move(game_id, from_sq, to_sq)
 
                     if result["success"]:
                          response = {
@@ -91,5 +90,4 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str):
     except WebSocketDisconnect:
         manager.disconnect(websocket, game_id)
     except Exception as e:
-        # Handle other exceptions
         manager.disconnect(websocket, game_id)

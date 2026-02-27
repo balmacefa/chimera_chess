@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, AsyncMock
 from app.services.game_service import GameService
 from app.domain.models import Board
 
@@ -8,28 +8,31 @@ from app.domain.models import Board
 @pytest.fixture
 def mock_repo():
     repo = MagicMock()
-    # default load_game behavior
-    repo.load_game.return_value = {
+    # default load_game behavior needs to be awaitable
+    repo.load_game = AsyncMock(return_value={
         "id": "test_game",
         "variant": "standard",
         "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    }
+    })
+    repo.save_game = AsyncMock()
     return repo
 
-def test_create_game(mock_repo):
+@pytest.mark.asyncio
+async def test_create_game(mock_repo):
     service = GameService(mock_repo)
-    result = service.create_game("standard")
+    result = await service.create_game("standard")
 
     assert result["game_id"] is not None
     assert result["variant"] == "standard"
     mock_repo.save_game.assert_called_once()
 
-def test_make_move_updates_state(mock_repo):
+@pytest.mark.asyncio
+async def test_make_move_updates_state(mock_repo):
     service = GameService(mock_repo)
     game_id = "test_game"
 
     # Valid move e2 -> e4 on initial board
-    result = service.make_move(game_id, "e2", "e4")
+    result = await service.make_move(game_id, "e2", "e4")
 
     assert result["success"] is True
 
@@ -47,19 +50,21 @@ def test_make_move_updates_state(mock_repo):
     # Check active color changed to black
     assert "b" in saved_fen.split()[1]
 
-def test_make_move_invalid(mock_repo):
+@pytest.mark.asyncio
+async def test_make_move_invalid(mock_repo):
     service = GameService(mock_repo)
     game_id = "test_game"
 
     # Invalid move e2 -> e5 (pawn jump 3 squares)
-    result = service.make_move(game_id, "e2", "e5")
+    result = await service.make_move(game_id, "e2", "e5")
 
     assert result["success"] is False
     assert "Illegal move" in result["error"]
 
-def test_game_not_found(mock_repo):
+@pytest.mark.asyncio
+async def test_game_not_found(mock_repo):
     service = GameService(mock_repo)
     mock_repo.load_game.return_value = None
 
     with pytest.raises(ValueError, match="not found"):
-        service.make_move("missing_id", "e2", "e4")
+        await service.make_move("missing_id", "e2", "e4")

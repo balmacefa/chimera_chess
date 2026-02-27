@@ -1,6 +1,7 @@
-from sqlalchemy import Column, String, Integer, Text
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.infrastructure.database import Base
-from sqlalchemy.orm import Session
+from sqlalchemy import Column, String, Text
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 import json
@@ -11,34 +12,38 @@ class GameModel(Base):
     id = Column(String, primary_key=True, index=True)
     variant = Column(String)
     fen = Column(Text)
-    # Could add more fields like status, turn, etc.
 
 class IGameRepository(ABC):
     @abstractmethod
-    def save_game(self, game_id: str, fen: str, variant: str):
+    async def save_game(self, game_id: str, fen: str, variant: str):
         pass
 
     @abstractmethod
-    def load_game(self, game_id: str) -> Optional[Dict]:
+    async def load_game(self, game_id: str) -> Optional[Dict]:
         pass
 
 class SQLiteRepository(IGameRepository):
-    def __init__(self, db: Session):
+    def __init__(self, db: AsyncSession):
         self.db = db
 
-    def save_game(self, game_id: str, fen: str, variant: str):
-        game = self.db.query(GameModel).filter(GameModel.id == game_id).first()
+    async def save_game(self, game_id: str, fen: str, variant: str):
+        result = await self.db.execute(select(GameModel).where(GameModel.id == game_id))
+        game = result.scalars().first()
+
         if game:
             game.fen = fen
             game.variant = variant
         else:
             game = GameModel(id=game_id, fen=fen, variant=variant)
             self.db.add(game)
-        self.db.commit()
-        self.db.refresh(game)
 
-    def load_game(self, game_id: str) -> Optional[Dict]:
-        game = self.db.query(GameModel).filter(GameModel.id == game_id).first()
+        await self.db.commit()
+        await self.db.refresh(game)
+
+    async def load_game(self, game_id: str) -> Optional[Dict]:
+        result = await self.db.execute(select(GameModel).where(GameModel.id == game_id))
+        game = result.scalars().first()
+
         if game:
             return {
                 "id": game.id,
