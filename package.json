@@ -9,6 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@khmyznikov/pwa-install": "^0.6.3",
+    "@lit/react": "^1.0.8",
+    "@types/dom-chromium-installation-events": "^101.0.4",
+    "@types/web-app-manifest": "^1.0.9",
+    "lit": "^3.3.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
