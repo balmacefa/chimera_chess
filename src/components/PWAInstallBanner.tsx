@@ -2,6 +2,9 @@
 
 import { useEffect } from 'react';
 
+// The package @khmyznikov/pwa-install already declares the 'pwa-install' intrinsic element in its types.
+// See node_modules/@khmyznikov/pwa-install/dist/types/types/jsx.d.ts
+
 export default function PWAInstallBanner() {
   useEffect(() => {
     // Import the package only on the client side
@@ -11,15 +14,4 @@ export default function PWAInstallBanner() {
   return (
     <pwa-install></pwa-install>
   );
-}
-
-// Add TypeScript definition for the custom element
-import { PWAInstallProps } from '@khmyznikov/pwa-install';
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'pwa-install': PWAInstallProps; // or specify the attributes you want to use
-    }
-  }
 }
