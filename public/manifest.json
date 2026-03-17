@@ -1,0 +1,21 @@
+{
+  "name": "Academia de Ajedrez Quimera",
+  "short_name": "Ajedrez Quimera",
+  "description": "Entrenamiento especializado para jugadores de ajedrez de nivel intermedio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#171717",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
