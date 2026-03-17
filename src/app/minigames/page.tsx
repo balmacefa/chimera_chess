@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Gamepad2, Grid3X3, Crosshair } from 'lucide-react';
+import { Gamepad2, Grid3X3, Crosshair, Eye } from 'lucide-react';
 
 export default function Minigames() {
   return (
-    <div className="min-h-screen bg-neutral-900 text-white p-8">
+    <div className="min-h-screen bg-neutral-900 text-white p-4 sm:p-8">
       <Link href="/" className="text-amber-500 hover:underline mb-8 inline-block">&larr; Volver a la Academia</Link>
 
       <div className="flex items-center gap-4 mb-6">
@@ -23,6 +23,11 @@ export default function Minigames() {
           <Crosshair className="w-8 h-8 text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
           <h2 className="text-2xl font-semibold mb-2 text-amber-400 group-hover:text-amber-300">Ejercicios de Puestos Avanzados</h2>
           <p className="text-neutral-400">Aprende a maniobrar los caballos hacia posiciones dominantes.</p>
+        </Link>
+        <Link href="/minigames/memorize-positions" className="group p-6 bg-neutral-800 rounded-xl border border-neutral-700 hover:border-amber-600 transition-colors block">
+          <Eye className="w-8 h-8 text-amber-500 mb-3 group-hover:scale-110 transition-transform" />
+          <h2 className="text-2xl font-semibold mb-2 text-amber-400 group-hover:text-amber-300">Visión del Tablero</h2>
+          <p className="text-neutral-400">Aprende y memoriza rápidamente las coordenadas en el tablero.</p>
         </Link>
       </div>
     </div>

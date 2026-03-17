@@ -1,0 +1,22 @@
+
+> my-app@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 2.3s
+ GET /minigames/memorize-positions 200 in 1396ms (compile: 1063ms, render: 333ms)
+ GET /minigames/memorize-positions 200 in 276ms (compile: 90ms, render: 186ms)
+ GET / 200 in 1033ms (compile: 913ms, render: 120ms)
+ GET / 200 in 76ms (compile: 4ms, render: 72ms)
+ GET /minigames/pawn-structure 200 in 279ms (compile: 39ms, render: 239ms)
+ GET /minigames/knight-outposts 200 in 902ms (compile: 741ms, render: 161ms)
+ GET /minigames/memorize-positions 200 in 54ms (compile: 4ms, render: 50ms)
+ GET / 200 in 97ms (compile: 33ms, render: 64ms)
+ GET / 200 in 70ms (compile: 5ms, render: 65ms)
+ GET /minigames/pawn-structure 200 in 288ms (compile: 11ms, render: 277ms)
+ GET /minigames/knight-outposts 200 in 229ms (compile: 8ms, render: 221ms)
+ GET /minigames/memorize-positions 200 in 71ms (compile: 10ms, render: 61ms)
