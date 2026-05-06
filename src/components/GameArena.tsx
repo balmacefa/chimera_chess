@@ -7,31 +7,46 @@ interface GameArenaProps {
 }
 
 export default function GameArena({ player1Name }: GameArenaProps) {
-  const { moves, makeMove, undoMove, narrative, suggestions, isLoadingLLM } = useGameManager();
-  const [currentPlayer, setCurrentPlayer] = useState(player1Name || 'Jugador 1');
-
-  const handleSuggestClick = (suggestion: string) => {
-    makeMove(currentPlayer, suggestion);
-    // Simple toggle for local 1v1
-    setCurrentPlayer(prev => prev === (player1Name || 'Jugador 1') ? 'Jugador 2' : (player1Name || 'Jugador 1'));
+  const initialPositions = {
+    [player1Name || 'Jugador 1']: { x: 0, y: 0 },
+    'Jugador 2': { x: 4, y: 4 }
   };
 
-  const handleCustomMove = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const moveStr = formData.get('move') as string;
-    if (moveStr) {
-      makeMove(currentPlayer, moveStr);
-      setCurrentPlayer(prev => prev === (player1Name || 'Jugador 1') ? 'Jugador 2' : (player1Name || 'Jugador 1'));
-      e.currentTarget.reset();
+  const { moves, makeMove, undoMove, currentPositions, narrative, suggestions, isLoadingLLM } = useGameManager(initialPositions);
+
+  // Determine whose turn it is based on move history length
+  const p1Name = player1Name || 'Jugador 1';
+  const currentPlayer = moves.length % 2 === 0 ? p1Name : 'Jugador 2';
+
+  const handleSuggestClick = (suggestion: string) => {
+    makeMove(currentPlayer, suggestion, currentPositions);
+  };
+
+  const gridSize = 5;
+
+  const handleCellClick = (x: number, y: number) => {
+    const isOccupied = Object.values(currentPositions).some(pos => pos.x === x && pos.y === y);
+
+    if (isOccupied) {
+      makeMove(currentPlayer, `Atacó la posición (${x}, ${y})`, currentPositions);
+    } else {
+      const newPositions = {
+        ...currentPositions,
+        [currentPlayer]: { x, y }
+      };
+      makeMove(currentPlayer, `Se movió a (${x}, ${y})`, newPositions);
     }
+  };
+
+  const handleUndo = () => {
+    undoMove();
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
 
-      {/* Tablero Principal (Placeholder) */}
-      <div className="lg:col-span-2 bg-neutral-800 border border-neutral-700 rounded-xl p-6 flex flex-col min-h-[400px]">
+      {/* Tablero Principal */}
+      <div className="lg:col-span-2 bg-neutral-800 border border-neutral-700 rounded-xl p-6 flex flex-col min-h-[500px]">
         <div className="flex justify-between items-center mb-4 border-b border-neutral-700 pb-4">
           <h2 className="text-xl font-bold text-amber-500 flex items-center gap-2">
             <Swords className="w-5 h-5" /> Arena de Combate
@@ -41,34 +56,65 @@ export default function GameArena({ player1Name }: GameArenaProps) {
           </div>
         </div>
 
-        {/* Aquí iría el renderizado del mapa isométrico */}
-        <div className="flex-grow bg-neutral-900 rounded-lg border border-neutral-700 flex items-center justify-center relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900 via-neutral-900 to-neutral-900"></div>
-          <p className="text-neutral-500 italic z-10 flex flex-col items-center gap-2">
-            <span>[ Vista Isométrica 2D ]</span>
-            <span className="text-sm">Interacciones del mapa irían aquí</span>
-          </p>
+        {/* Renderizado del mapa isométrico interactivo */}
+        <div className="flex-grow bg-neutral-900 rounded-lg border border-neutral-700 flex items-center justify-center relative overflow-hidden perspective-1000">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900 via-neutral-900 to-neutral-900 pointer-events-none"></div>
+
+          <div
+            className="grid gap-1 p-4 transition-transform duration-500 select-none"
+            style={{
+              gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
+              transform: 'rotateX(60deg) rotateZ(-45deg)',
+              transformStyle: 'preserve-3d'
+            }}
+          >
+            {Array.from({ length: gridSize * gridSize }).map((_, i) => {
+              const x = i % gridSize;
+              const y = Math.floor(i / gridSize);
+
+              const isP1 = currentPositions[p1Name]?.x === x && currentPositions[p1Name]?.y === y;
+              const isP2 = currentPositions['Jugador 2']?.x === x && currentPositions['Jugador 2']?.y === y;
+
+              return (
+                <div
+                  key={i}
+                  onClick={() => handleCellClick(x, y)}
+                  className={`w-12 h-12 sm:w-16 sm:h-16 border border-neutral-700/50 bg-neutral-800/80 hover:bg-amber-900/50 cursor-pointer flex items-center justify-center transition-colors relative group`}
+                  style={{ transform: 'translateZ(0px)' }}
+                >
+                  <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+
+                  {isP1 && (
+                    <div
+                      className="w-8 h-8 sm:w-10 sm:h-10 bg-amber-500 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)] flex items-center justify-center text-xs font-bold text-neutral-900"
+                      style={{ transform: 'rotateZ(45deg) rotateX(-60deg) translateY(-10px)' }}
+                    >
+                      P1
+                    </div>
+                  )}
+                  {isP2 && (
+                    <div
+                      className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)] flex items-center justify-center text-xs font-bold text-white"
+                      style={{ transform: 'rotateZ(45deg) rotateX(-60deg) translateY(-10px)' }}
+                    >
+                      P2
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
         </div>
 
         {/* Controles del juego */}
-        <div className="mt-4 flex gap-4">
-          <form onSubmit={handleCustomMove} className="flex-grow flex gap-2">
-            <input
-              name="move"
-              type="text"
-              placeholder="Escribe un movimiento (ej. Mover al norte, Atacar)"
-              className="flex-grow bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-amber-500"
-            />
-            <button type="submit" className="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-              Acción
-            </button>
-          </form>
+        <div className="mt-4 flex justify-end">
           <button
-            onClick={undoMove}
+            onClick={handleUndo}
             disabled={moves.length === 0}
-            className="flex items-center gap-2 bg-neutral-700 hover:bg-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-neutral-700 hover:bg-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg transition-colors"
           >
-            <RotateCcw className="w-4 h-4" /> Deshacer
+            <RotateCcw className="w-4 h-4" /> Deshacer Último Movimiento
           </button>
         </div>
       </div>
