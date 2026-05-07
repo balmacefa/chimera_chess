@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Gamepad2, Crown, Brain } from 'lucide-react';
+import { Gamepad2, Crown, Brain, Users } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -25,7 +25,13 @@ export default function Home() {
             <p className="text-neutral-400">Aprende a navegar las aperturas, el turbulento medio juego, finales precisos y posiciones de jugadores titulados.</p>
           </Link>
 
-          <Link href="/theory" className="group p-6 border border-neutral-800 rounded-xl hover:bg-neutral-800 hover:border-amber-600 transition-all flex flex-col gap-3 sm:col-span-2 items-center text-center">
+          <Link href="/local-game" className="group p-6 border border-neutral-800 rounded-xl hover:bg-neutral-800 hover:border-amber-600 transition-all flex flex-col gap-3 items-center text-center sm:items-start sm:text-left">
+            <Users className="w-8 h-8 text-amber-500 mb-2 group-hover:text-amber-400" />
+            <h2 className="text-2xl font-semibold group-hover:text-amber-400 flex items-center gap-2">Juego Local 1vs1 <span className="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></h2>
+            <p className="text-neutral-400">Juega contra un amigo en el mismo dispositivo.</p>
+          </Link>
+
+          <Link href="/theory" className="group p-6 border border-neutral-800 rounded-xl hover:bg-neutral-800 hover:border-amber-600 transition-all flex flex-col gap-3 items-center text-center sm:items-start sm:text-left">
             <Brain className="w-8 h-8 text-amber-500 mb-2 group-hover:text-amber-400" />
             <h2 className="text-2xl font-semibold group-hover:text-amber-400 flex items-center gap-2">Teoría de Juegos <span className="inline-block transition-transform group-hover:translate-x-1">&rarr;</span></h2>
             <p className="text-neutral-400">Aplica la teoría de juegos matemática y estratégica para calcular mejor que tus oponentes.</p>
